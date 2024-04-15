@@ -1,4 +1,4 @@
-package entity;
+package simpledashboard.entity;
 
 import org.springframework.data.annotation.Id;
 

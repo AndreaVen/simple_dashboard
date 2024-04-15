@@ -1,6 +1,6 @@
 package simpledashboard.repository;
 
-import entity.DataClass;
+import simpledashboard.entity.DataClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
