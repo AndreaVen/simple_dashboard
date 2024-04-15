@@ -1,19 +1,12 @@
-package simpledashboard.controller;
+package switchbotdashboard.controller;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import simpledashboard.service.SimpleService;
-
 @Controller
 public class GoogleChartsController {
-    @Autowired
-    SimpleService simpleService;
-
     @GetMapping("/")
     public String getPieChart(Model model) {
         Map<String, Integer> graphData = new TreeMap<>();
@@ -24,11 +17,4 @@ public class GoogleChartsController {
         model.addAttribute("chartData", graphData);
         return "google-charts";
     }
-
-    @GetMapping("/getData")
-    public void getData() {
-        simpleService.getData();
-    }
-
-
 }
