@@ -1,8 +1,12 @@
 package simpledashboard.repository;
 
+import entity.DataClass;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class MysqlDataReader implements  DataReader{
@@ -11,7 +15,6 @@ public class MysqlDataReader implements  DataReader{
     @Override
     public void getTemperatue() {
         System.out.println("prendo temperature");
-        int result = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM switchbot.sensor_data", Integer.class);
-        System.out.println(result);
+       List<DataClass> result = (List<DataClass>) jdbcTemplate.query("select * from switchbot.data", new BeanPropertyRowMapper<DataClass>(DataClass.class));
     }
 }
