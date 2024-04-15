@@ -1,14 +1,14 @@
-package switchbotdashboard;
+package simpledashboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
-public class SwitchbotDashboardApplication {
+public class SimpleDashboardApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SwitchbotDashboardApplication.class, args);
+		SpringApplication.run(SimpleDashboardApplication.class, args);
 	}
 
 }
