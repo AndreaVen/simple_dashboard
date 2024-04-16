@@ -13,14 +13,26 @@
 
 
 <div id="chart_wrapper">
-  <div id="curve_chart" style="width: 5000px; height: 500px"></div>
+  <div id="curve_chart" style="width: 5000px; height: 700px"></div>
 </div>
+
 
 
 <script th:inline="javascript">
 
-  var real_data = /*[[${chartData}]]*/'noValue';
-$(document).ready(function() {
+  var real_data_s1 = /*[[${chartData_s1}]]*/'noValue';
+  var real_data_s2 = /*[[${chartData_s2}]]*/'noValue';
+  var real_data_s3 = /*[[${chartData_s3}]]*/'noValue';
+
+
+
+  var device1 = /*[[${device1}]]*/'noValue';
+  var device2 = /*[[${device2}]]*/'noValue';
+  var device3 = /*[[${device3}]]*/'noValue';
+
+
+
+  $(document).ready(function() {
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);
 });
@@ -30,16 +42,14 @@ function drawChart() {
 
 
   var data = new google.visualization.DataTable();
+
   data.addColumn('string', 'giorno');
-  data.addColumn('number', 'temperatura');
-  Object.keys(real_data).forEach(function(key) {
-  data.addRow([ key, real_data[key] ]);
+  data.addColumn('number', 'temperatura '+device1);
+  data.addColumn('number', 'temperatura '+device2);
+  data.addColumn('number', 'temperatura '+device3);
+  Object.keys(real_data_s1).forEach(function(key) {
+  data.addRow([ key, real_data_s1[key],real_data_s2[key],real_data_s3[key] ]);
 });
-
-
-
-
-
 
   var options = {
   curveType: 'function',
@@ -54,6 +64,9 @@ function drawChart() {
 
 
   chart.draw(data, options);
+
+
+
 }
   </script>
 </body>
@@ -61,6 +74,16 @@ function drawChart() {
 
 <style>
   #chart_wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 1900px;
+  }
+  #chart_wrapper2 {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 1900px;
+  }
+  #chart_wrapper3 {
     overflow-x: scroll;
     overflow-y: hidden;
     width: 1900px;

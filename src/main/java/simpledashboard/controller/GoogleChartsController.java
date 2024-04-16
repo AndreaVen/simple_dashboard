@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
+import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,20 +36,21 @@ public class GoogleChartsController {
     @GetMapping("/getData")
     public String getData(Model model) {
         List<HourlyAvgTemperatureHumidity> hourlyAvgTemperatureHumidities=simpleService.getHourlyAvgTempHum();
+        List<String> listOfDevices=hourlyAvgTemperatureHumidities.stream().map(HourlyAvgTemperatureHumidity::getName).distinct().collect(Collectors.toList());
+        int nDevices=1;
+        for (String currentDevice:listOfDevices){
+
+        Map<String, Float> graphData= hourlyAvgTemperatureHumidities.stream()
+                .filter(o-> StringUtils.wildCompareIgnoreCase(currentDevice,o.getName()))
+                .collect(Collectors.toMap(HourlyAvgTemperatureHumidity::getDate,HourlyAvgTemperatureHumidity::getAvg_temperature));
+            model.addAttribute("device"+nDevices,currentDevice);
+            model.addAttribute("chartData_s"+nDevices, graphData);
+            nDevices++;
+
+        }
 
 
-        Map<String, Float> graphData = new TreeMap<>();
-        int i=0;
-         while (i<hourlyAvgTemperatureHumidities.size()-1){
-             i=i+1;
-             String date=hourlyAvgTemperatureHumidities.get(i).getDate();
-             Float temp=hourlyAvgTemperatureHumidities.get(i).getAvg_temperature();
-             graphData.put(date,temp );
 
-         }
-
-
-        model.addAttribute("chartData", graphData);
 
         return "temperature-chart";
         

@@ -22,7 +22,6 @@ public class SimpleService {
 
     public List<HourlyAvgTemperatureHumidity> getHourlyAvgTempHum(){
         List<HourlyAvgTemperatureHumidity> result = mysqlDataReader.getAvgTempHum().stream().collect(Collectors.toList());
-        result.stream().filter(s-> StringUtils.endsWithIgnoreCase("C23830322B78",s.getId())).collect(Collectors.toList());
         return  result;
 
 
