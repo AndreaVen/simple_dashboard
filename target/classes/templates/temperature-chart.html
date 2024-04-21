@@ -41,29 +41,69 @@
 function drawChart() {
 
 
+  var currentLineWidth=[1,1,1]
+
+
+  function selectHandler() {
+    var selectedItem = chart.getSelection()[0];
+    if (selectedItem) {
+      dispositivo=selectedItem.column-1
+      if (currentLineWidth[dispositivo]>0.5){
+        currentLineWidth[dispositivo]=0;
+      }
+      else{
+        currentLineWidth[dispositivo]=1;
+
+      }
+      var options = {
+        curveType: 'function',
+        legend: { position: 'right' },
+        explorer: {
+          axis: 'both',
+          maxZoomOut:2,
+          keepInBounds: false
+        },
+        series: {
+          0: {lineWidth: currentLineWidth[0] },
+          1: { lineWidth: currentLineWidth[1]},
+          2: { lineWidth: currentLineWidth[2]}        }};
+
+      chart.draw(data, options);
+
+    }
+  }
+
+
+
+
   var data = new google.visualization.DataTable();
 
-  data.addColumn('string', 'giorno');
+  data.addColumn('date', 'giorno');
   data.addColumn('number', 'temperatura '+device1);
   data.addColumn('number', 'temperatura '+device2);
   data.addColumn('number', 'temperatura '+device3);
-  Object.keys(real_data_s1).forEach(function(key) {
-  data.addRow([ key, real_data_s1[key],real_data_s2[key],real_data_s3[key] ]);
+  Object.keys(real_data_s3).forEach(function(key) {
+  data.addRow([ new Date(key), real_data_s1[key],real_data_s2[key],real_data_s3[key] ]);
 });
 
   var options = {
   curveType: 'function',
-  legend: { position: 'bottom'
+    legend: { position: 'right' },
+    explorer: {
+      axis: 'horizontal',
+      maxZoomOut:2,
+      keepInBounds: false
     }
-
-
 };
+
+
 
 
   var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
 
   chart.draw(data, options);
+  google.visualization.events.addListener(chart, 'select', selectHandler);
 
 
 
@@ -73,20 +113,11 @@ function drawChart() {
 </html>
 
 <style>
-  #chart_wrapper {
+  #chart_wrapperx {
     overflow-x: scroll;
     overflow-y: hidden;
     width: 1900px;
   }
-  #chart_wrapper2 {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    width: 1900px;
-  }
-  #chart_wrapper3 {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    width: 1900px;
-  }
+
 </style>
 

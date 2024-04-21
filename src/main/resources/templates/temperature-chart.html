@@ -78,12 +78,12 @@ function drawChart() {
 
   var data = new google.visualization.DataTable();
 
-  data.addColumn('string', 'giorno');
+  data.addColumn('date', 'giorno');
   data.addColumn('number', 'temperatura '+device1);
   data.addColumn('number', 'temperatura '+device2);
   data.addColumn('number', 'temperatura '+device3);
-  Object.keys(real_data_s1).forEach(function(key) {
-  data.addRow([ key, real_data_s1[key],real_data_s2[key],real_data_s3[key] ]);
+  Object.keys(real_data_s3).forEach(function(key) {
+  data.addRow([ new Date(key), real_data_s1[key],real_data_s2[key],real_data_s3[key] ]);
 });
 
   var options = {

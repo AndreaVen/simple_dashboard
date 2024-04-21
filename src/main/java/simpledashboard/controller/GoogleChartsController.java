@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import simpledashboard.entity.HourlyAvgTemperatureHumidity;
 import simpledashboard.entity.TemperatureClass;
 import simpledashboard.service.SimpleService;
+import simpledashboard.utils.DateUtils;
 
 @Controller
 public class GoogleChartsController {
@@ -39,15 +40,27 @@ public class GoogleChartsController {
         List<String> listOfDevices=hourlyAvgTemperatureHumidities.stream().map(HourlyAvgTemperatureHumidity::getName).distinct().collect(Collectors.toList());
         int nDevices=1;
         for (String currentDevice:listOfDevices){
+            Map<Date, Float> graphData=new TreeMap<>();
 
-        Map<String, Float> graphData= hourlyAvgTemperatureHumidities.stream()
-                .filter(o-> StringUtils.wildCompareIgnoreCase(currentDevice,o.getName()))
-                .collect(Collectors.toMap(HourlyAvgTemperatureHumidity::getDate,HourlyAvgTemperatureHumidity::getAvg_temperature));
+
+            List<HourlyAvgTemperatureHumidity> currentSeries=hourlyAvgTemperatureHumidities.stream()
+                 .filter(o-> StringUtils.wildCompareIgnoreCase(currentDevice,o.getName())).collect(Collectors.toList());
+
+            for (HourlyAvgTemperatureHumidity value:currentSeries){
+                Date date= DateUtils.StringToDate(value.getDate());
+                float temp=value.getAvg_temperature();
+                graphData.put(date,temp);
+
+            }
             model.addAttribute("device"+nDevices,currentDevice);
             model.addAttribute("chartData_s"+nDevices, graphData);
             nDevices++;
 
+
+
         }
+
+
 
 
 
