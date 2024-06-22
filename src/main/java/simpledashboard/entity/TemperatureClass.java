@@ -1,7 +1,7 @@
 package simpledashboard.entity;
 
-import org.springframework.data.annotation.Id;
-
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TemperatureClass {
@@ -10,20 +10,11 @@ public class TemperatureClass {
     private int humidity;
 
     private String id;
-    @Id
-    private String timestamp_id;
+
     private String name;
-    private Date date;
 
-    private Date timestamp;
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
+    private LocalDateTime timestamp;
 
     public float getTemperature() {
         return temperature;
@@ -49,14 +40,6 @@ public class TemperatureClass {
         this.id = id;
     }
 
-    public String getTimestamp_id() {
-        return timestamp_id;
-    }
-
-    public void setTimestamp_id(String timestamp_id) {
-        this.timestamp_id = timestamp_id;
-    }
-
     public String getName() {
         return name;
     }
@@ -65,11 +48,11 @@ public class TemperatureClass {
         this.name = name;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -1,11 +1,12 @@
 package simpledashboard.entity;
 
-import org.springframework.data.annotation.Id;
+import java.time.LocalDateTime;
 
 public class HourlyAvgTemperatureHumidity {
-    @Id
-    private String date;
-    private int avg_humidity;
+
+    private LocalDateTime date;
+
+    private float avg_humidity;
     private float avg_temperature;
 
     private String id;
@@ -28,19 +29,12 @@ public class HourlyAvgTemperatureHumidity {
         this.id = id;
     }
 
-    public String getDate() {
-        return date;
-    }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getAvg_humidity() {
+    public float getAvg_humidity() {
         return avg_humidity;
     }
 
-    public void setAvg_humidity(int avg_humidity) {
+    public void setAvg_humidity(float avg_humidity) {
         this.avg_humidity = avg_humidity;
     }
 
@@ -50,5 +44,13 @@ public class HourlyAvgTemperatureHumidity {
 
     public void setAvg_temperature(float avg_temperature) {
         this.avg_temperature = avg_temperature;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

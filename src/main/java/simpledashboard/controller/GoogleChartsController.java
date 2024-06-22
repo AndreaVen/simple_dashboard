@@ -1,11 +1,9 @@
 package simpledashboard.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.mysql.cj.util.StringUtils;
@@ -14,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import simpledashboard.entity.HourlyAvgTemperatureHumidity;
-import simpledashboard.entity.TemperatureClass;
 import simpledashboard.service.SimpleService;
-import simpledashboard.utils.DateUtils;
 
 @Controller
 public class GoogleChartsController {
@@ -40,14 +36,14 @@ public class GoogleChartsController {
         List<String> listOfDevices=hourlyAvgTemperatureHumidities.stream().map(HourlyAvgTemperatureHumidity::getName).distinct().collect(Collectors.toList());
         int nDevices=1;
         for (String currentDevice:listOfDevices){
-            Map<Date, Float> graphData=new TreeMap<>();
+            Map<LocalDateTime, Float> graphData=new TreeMap<>();
 
 
             List<HourlyAvgTemperatureHumidity> currentSeries=hourlyAvgTemperatureHumidities.stream()
                  .filter(o-> StringUtils.wildCompareIgnoreCase(currentDevice,o.getName())).collect(Collectors.toList());
 
             for (HourlyAvgTemperatureHumidity value:currentSeries){
-                Date date= DateUtils.StringToDate(value.getDate());
+                LocalDateTime date= value.getDate();
                 float temp=value.getAvg_temperature();
                 graphData.put(date,temp);
 
@@ -67,6 +63,12 @@ public class GoogleChartsController {
 
         return "temperature-chart";
         
+    }
+
+    @GetMapping("/getSimpleData")
+    public String getSimpleData(Model model) throws InterruptedException {
+        simpleService.getData();
+        return "google-charts";
     }
 
 

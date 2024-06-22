@@ -1,7 +1,6 @@
 package simpledashboard.repository;
 
 import org.springframework.beans.factory.annotation.Value;
-import simpledashboard.entity.DataClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,10 +17,13 @@ public class MysqlTemperatureRepository implements TemperatureRepository {
 
     @Value("${query.hourly.average.temp.hum}")
     private String hourylyAvgTempHumQuery;
+    @Value("${query.temp.hum}")
+
+    private String tempHumquery;
 
     @Override
     public List<TemperatureClass> getTemperatue() {
-        List<TemperatureClass> result = (List<TemperatureClass>) jdbcTemplate.query("select * from switchbot.sensor_data limit 1000", new BeanPropertyRowMapper<TemperatureClass>(TemperatureClass.class));
+        List<TemperatureClass> result = (List<TemperatureClass>) jdbcTemplate.query(tempHumquery, new BeanPropertyRowMapper<TemperatureClass>(TemperatureClass.class));
 
         return result;
     }
